@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     include:[{ model: Product,
     attributes:['id', "product_name","price","stock", "category_id"]}]
   })
-    .then(()=> res.json());
+    .then((faTags)=> res.json(faTags));
     if(err =>{
     console.error(err)});
 });
@@ -23,7 +23,7 @@ router.get('/:id', (req, res) => {
     include:[{ model: Product,
     attributes:['id', "product_name","price","stock", "category_id"]}]
 })
-  .then(()=> res.json());
+  .then((foundTag)=> res.json(foundTag));
   if(err =>{
     console.error(err)});
 
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
   Tag.create({
     tag_name: req.body.tag_name
   })
-  .then(()=> res.json());
+  .then((createTag)=> res.json(createTag));
   if(err =>{
     console.error(err)});
 });
@@ -44,13 +44,19 @@ router.put('/:id', (req, res) => {
   Tag.update(req.body,{
     where: {id: req.params.id}
   })  
-  .then(()=> res.json());
+  .then((updateTag)=> res.json(updateTag));
   if(err =>{
     console.error(err)});
 });
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
+  Tag.destroy(req.body,{
+    where: {id: req.params.id}
+  })  
+  .then((destroyedTag)=> res.json(destroyedTag));
+  if(err =>{
+    console.error(err)});
 });
 
 module.exports = router;

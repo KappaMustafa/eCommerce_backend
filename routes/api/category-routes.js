@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     include:[{ model: Product,
     attributes:['id', "product_name","price","stock", "category_id"]}]
   })
-    .then(()=> res.json());
+    .then((faCAT)=> res.json(faCAT));
     if(err =>{
     console.error(err)});
 });
@@ -23,7 +23,7 @@ router.get('/:id', (req, res) => {
     include:[{ model: Product,
     attributes:['id', "product_name","price","stock", "category_id"]}]
 })
-  .then(()=> res.json());
+  .then((foundCAT)=> res.json(foundCAT));
   if(err =>{
     console.error(err)});
 });
@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
   Category.create({
     category_name: req.body.tag_name
   })
-  .then(()=> res.json());
+  .then((createdCAT)=> res.json(createdCAT));
   if(err =>{
     console.error(err)});
 });
@@ -43,13 +43,21 @@ router.put('/:id', (req, res) => {
   Category.update(req.body,{
     where: {id: req.params.id}
   })  
-  .then(()=> res.json());
+  .then((putCAT)=> res.json(putCAT));
   if(err =>{
     console.error(err)});
 });
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
+  Category.destroy(req.body,{
+    where: {id: req.params.id}
+  })  
+  .then((destroyedCAT)=> res.json(destroyedCAT));
+  if(err =>{
+    console.error(err)});
+
+
 });
 
 module.exports = router;

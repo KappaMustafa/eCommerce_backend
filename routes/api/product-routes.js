@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     { model: Tag,
     attributes:["id", "tag_name"]}]
   })
-    .then(()=> res.json());
+    .then((faProduct)=> res.json(faProduct));
     if(err =>{
     console.error(err)});
 });
@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
     { model: Tag,
     attributes:["id", "tag_name"]}]
   })
-    .then(()=> res.json());
+    .then((findProduct)=> res.json(findProduct));
     if(err =>{
     console.error(err)});
 });
@@ -111,6 +111,12 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy(req.body,{
+    where: {id: req.params.id}
+  })  
+  .then((destroyedProduct)=> res.json(destroyedProduct));
+  if(err =>{
+    console.error(err)});
 });
 
 module.exports = router;
